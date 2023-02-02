@@ -143,7 +143,6 @@ class ExtendedImageEditorState extends State<ExtendedImageEditor> {
                   }
                   _editActionDetails!.cropRect = cropRect;
                   if (_editActionDetails!.initialCropRect != null) {
-                    print('INIT CROP RECT');
                     final ui.Rect savedRect = _editActionDetails!.initialCropRect!;
                     final int imageWidth = widget.extendedImageState.extendedImageInfo!.image.width;
                     final int imageHeight = widget.extendedImageState.extendedImageInfo!.image.height;
@@ -157,20 +156,8 @@ class ExtendedImageEditorState extends State<ExtendedImageEditor> {
                     final double y = imageHeight / 2 * ratio - cropRect.height / 2;
                     final double yOffset = y - savedRect.top * ratio;
 
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      print('setState 1');
-                      print('scale $scale');
-                      print('Offset ${Offset(xOffset, yOffset)}');
-                      setState(() {
-                        _editActionDetails!.totalScale = scale;
-                        _editActionDetails!.delta = Offset(xOffset, yOffset);
-                      });
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        print('setState 1');
-                        // not sure why this is needed but it fixes a bug where the crop rect doesn't get updated
-                        setState(() {});
-                      });
-                    });
+                    _editActionDetails!.totalScale = scale;
+                    _editActionDetails!.delta = Offset(xOffset, yOffset);
                   }
                 }
 
