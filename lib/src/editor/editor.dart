@@ -158,8 +158,6 @@ class ExtendedImageEditorState extends State<ExtendedImageEditor> {
 
                     _editActionDetails!.totalScale = scale;
                     _editActionDetails!.delta = Offset(xOffset, yOffset);
-                    print(_editActionDetails!.totalScale);
-                    print(_editActionDetails!.delta);
                   }
                 }
 
