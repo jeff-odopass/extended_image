@@ -121,7 +121,7 @@ class ExtendedImageEditorState extends State<ExtendedImageEditor> {
                       alignment is! Alignment ? Directionality.of(context) : null;
                   final Alignment resolvedAlignment = alignment.resolve(textDirection);
                   final Rect destinationRect = getDestinationRect(
-                      rect: layoutRect,
+                      rect: _editActionDetails!.initialCropRect ?? layoutRect,
                       inputSize: Size(widget.extendedImageState.extendedImageInfo!.image.width.toDouble(),
                           widget.extendedImageState.extendedImageInfo!.image.height.toDouble()),
                       flipHorizontally: false,
@@ -142,23 +142,6 @@ class ExtendedImageEditorState extends State<ExtendedImageEditor> {
                     cropRect = rect;
                   }
                   _editActionDetails!.cropRect = cropRect;
-                  if (_editActionDetails!.initialCropRect != null) {
-                    final ui.Rect savedRect = _editActionDetails!.initialCropRect!;
-                    final int imageWidth = widget.extendedImageState.extendedImageInfo!.image.width;
-                    final int imageHeight = widget.extendedImageState.extendedImageInfo!.image.height;
-                    final bool topSame = cropRect.top.toInt() == destinationRect.top.toInt();
-                    final double scale =
-                        (topSame ? imageHeight : imageWidth) / (topSame ? savedRect.height : savedRect.width);
-                    final double ratio =
-                        scale * (topSame ? (cropRect.height / imageHeight) : (cropRect.width / imageWidth));
-                    final double x = imageWidth / 2 * ratio - cropRect.width / 2;
-                    final double xOffset = x - savedRect.left * ratio;
-                    final double y = imageHeight / 2 * ratio - cropRect.height / 2;
-                    final double yOffset = y - savedRect.top * ratio;
-
-                    _editActionDetails!.totalScale = scale;
-                    _editActionDetails!.delta = Offset(xOffset, yOffset);
-                  }
                 }
 
                 return ExtendedImageCropLayer(
