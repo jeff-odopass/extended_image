@@ -249,13 +249,21 @@ class ExtendedImageGestureState extends State<ExtendedImageGesture>
     }
 
     if (_pageViewState != null && _pageViewState!.isDraging) {
-      _pageViewState!.onDragEnd(DragEndDetails(
-        velocity: details.velocity,
-        primaryVelocity:
-            _pageViewState!.widget.scrollDirection == Axis.horizontal
-                ? details.velocity.pixelsPerSecond.dx
-                : details.velocity.pixelsPerSecond.dy,
-      ));
+      _pageViewState!.onDragEnd(
+        DragEndDetails(
+          velocity: _pageViewState!.widget.scrollDirection == Axis.horizontal
+              ? Velocity(
+                  pixelsPerSecond:
+                      Offset(details.velocity.pixelsPerSecond.dx, 0))
+              : Velocity(
+                  pixelsPerSecond:
+                      Offset(0, details.velocity.pixelsPerSecond.dy)),
+          primaryVelocity:
+              _pageViewState!.widget.scrollDirection == Axis.horizontal
+                  ? details.velocity.pixelsPerSecond.dx
+                  : details.velocity.pixelsPerSecond.dy,
+        ),
+      );
       return;
     }
 
@@ -341,9 +349,8 @@ class ExtendedImageGestureState extends State<ExtendedImageGesture>
       } else {
         updateGesture = true;
       }
-
-      if (details.focalPointDelta.distance.greaterThan(minGesturePageDelta) &&
-          updateGesture) {
+      final double delta = (details.focalPoint - _startingOffset).distance;
+      if (delta.greaterThan(minGesturePageDelta) && updateGesture) {
         extendedImageSlidePageState!.slide(
           details.focalPointDelta,
           extendedImageGestureState: this,
