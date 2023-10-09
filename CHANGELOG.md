@@ -1,6 +1,43 @@
-## 7.0.0
+## 8.1.1
 
-* Migrate to 3.7.0 (#545)
+* Fix issue with onDragEnd
+
+## 8.1.0
+
+* Migrate to 3.13.0 
+* Breaking change: remove preloadPagesCount of ExtendedImageGesturePageView. The cacheExtent of Viewport should be 0. 
+* Add demo to instead of preloadPagesCount of ExtendedImageGesturePageView
+
+
+## 8.0.2
+
+* [EditorCropLayerPainter.paintMask] not use BlendMode.clear now, due to '--web-renderer html' is not support.
+
+## 8.0.1
+
+* Dart sdk: '>=2.18.0 <4.0.0'
+
+## 8.0.0
+
+* Migrate to Flutter 3.10.0 and Dart 3.0.0 (#557,#563,#570,#572,#573)
+* Cherry Pick https://github.com/flutter/flutter/pull/110131
+* Cherry Pick https://github.com/flutter/flutter/pull/119495
+
+## 7.0.2
+
+* publish v6.4.1 for flutter 3.3.0 and v6.2.2 for flutter 3.0.5
+
+## 7.0.1
+
+* update judging condition of delta(minGesturePageDelta) at it's sliding page when set ExtendedImageMode.gesture
+
+## 7.0.0
+
+* Migrate to 3.7.0 (#545)
+
+## 6.4.1
+
+* latest code on Flutter 3.3.0 
 
 ## 6.4.0
 
@@ -26,6 +63,10 @@
 ## 6.3.0
 
 * Migrate to 3.3.0
+
+## 6.2.2
+
+* latest code on Flutter 3.0.5 
 
 ## 6.2.1
 

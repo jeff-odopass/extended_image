@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:extended_image/src/border_painter.dart';
 import 'package:extended_image/src/gesture/gesture.dart';
 import 'package:extended_image/src/image/raw_image.dart';
@@ -7,6 +9,7 @@ import 'package:extended_image_library/extended_image_library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/semantics.dart';
 
 import 'editor/editor.dart';
@@ -972,7 +975,7 @@ class _ExtendedImageState extends State<ExtendedImage>
           if (widget.borderRadius != null) {
             current = ClipRRect(
               child: current,
-              borderRadius: widget.borderRadius,
+              borderRadius: widget.borderRadius!,
               clipBehavior: widget.clipBehavior,
             );
           }
@@ -1234,12 +1237,17 @@ class _ExtendedImageState extends State<ExtendedImage>
     });
 
     if (widget.clearMemoryCacheIfFailed) {
-      widget.image.evict();
+      scheduleMicrotask(() {
+        widget.image.evict();
+        // PaintingBinding.instance.imageCache.evict(key);
+      });
     }
   }
 
   void _replaceImage({required ImageInfo? info}) {
-    _imageInfo?.dispose();
+    final ImageInfo? oldImageInfo = _imageInfo;
+    SchedulerBinding.instance
+        .addPostFrameCallback((_) => oldImageInfo?.dispose());
     _imageInfo = info;
   }
 

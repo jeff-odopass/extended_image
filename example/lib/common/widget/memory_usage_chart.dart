@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:example/common/utils/vm_helper.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -37,11 +36,11 @@ class _MemoryUsageChartState extends State<MemoryUsageChart> {
     }
     return Container(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 5),
-      width: window.physicalSize.width,
+      width: View.of(context).physicalSize.width,
       height: 150,
       child: LineChart(
         getData(),
-        swapAnimationDuration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
       ),
     );
   }
@@ -57,7 +56,7 @@ class _MemoryUsageChartState extends State<MemoryUsageChart> {
         ),
         handleBuiltInTouches: true,
       ),
-      gridData: FlGridData(
+      gridData: const FlGridData(
         show: false,
       ),
       titlesData: FlTitlesData(
@@ -170,7 +169,7 @@ class _MemoryUsageChartState extends State<MemoryUsageChart> {
       color: color,
       barWidth: 2,
       isStrokeCapRound: true,
-      dotData: FlDotData(
+      dotData: const FlDotData(
         show: false,
       ),
       belowBarData: BarAreaData(
