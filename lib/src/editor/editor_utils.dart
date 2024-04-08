@@ -355,6 +355,7 @@ class EditorConfig {
     this.editActionDetailsIsChanged,
     this.reverseMousePointerScrollDirection = false,
     this.initialCropRect,
+    this.autoZoomCropRect = false,
   })  : assert(lineHeight > 0.0),
         assert(hitTestSize >= 0.0),
         assert(maxScale > 0.0),
@@ -431,6 +432,9 @@ class EditorConfig {
 
   /// Set initial values for crop rect
   final Rect? initialCropRect;
+
+  /// Allow to zoom automatically when modifyng the layer of crop rect
+  final bool autoZoomCropRect;
 }
 
 class CropAspectRatios {

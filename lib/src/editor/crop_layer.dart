@@ -359,6 +359,8 @@ class ExtendedImageCropLayerState extends State<ExtendedImageCropLayer>
   /// handle crop rect with aspectRatio
   Rect _handleAspectRatio(double gWidth, _MoveType moveType, Rect result,
       Rect? layerDestinationRect, Offset delta) {
+      if (!widget.editorConfig.autoZoomCropRect)
+      return result;
     final double? aspectRatio = widget.editActionDetails.cropAspectRatio;
     // do with aspect ratio
     if (aspectRatio != null) {
@@ -504,7 +506,11 @@ class ExtendedImageCropLayerState extends State<ExtendedImageCropLayer>
   }
 
   void _doCropAutoCenterAnimation({Rect? newScreenCropRect}) {
-    if (mounted) {
+    if (mounted && !widget.editorConfig.autoZoomCropRect) {
+      setState(() {
+        newScreenCropRect ??= _rectAnimation!.value;
+      });
+    } else if (mounted) {
       setState(() {
         final Rect oldScreenCropRect = widget.editActionDetails.screenCropRect!;
         final Rect oldScreenDestinationRect =
